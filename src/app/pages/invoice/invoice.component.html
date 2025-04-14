@@ -1,0 +1,53 @@
+<div class="p-4">
+  <button mat-raised-button color="primary" (click)="exportToPDF()">Export Invoice PDF</button>
+
+  <!-- Hidden container for clean PDF render -->
+  <div #pdfContent style="position: absolute; left: -9999px; top: -9999px; background: white; padding: 40px; width: 800px; font-family: Arial, sans-serif;">
+    <!-- Header with logo -->
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1976d2; padding-bottom: 10px;">
+      <img src="/public/logo.png" alt="Company Logo" style="height: 60px;">
+      <h2 style="color: #1976d2; margin: 0;">Invoice</h2>
+    </div>
+
+    <!-- Invoice info -->
+    <div style="margin-top: 20px;">
+      <p><strong style="color: #555;">Invoice ID:</strong> {{ invoice.invoice_id }}</p>
+      <p><strong style="color: #555;">Customer:</strong> {{ invoice.customer_name }}</p>
+      <p><strong style="color: #555;">Date:</strong> {{ invoice.invoice_date }}</p>
+    </div>
+
+    <!-- Invoice table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px;">
+      <thead>
+        <tr style="background-color: #f0f0f0; color: #333;">
+          <th style="border: 1px solid #ccc; padding: 8px;">Item ID</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">Product ID</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">Quantity</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">Price</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">GST (%)</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of invoiceItems">
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ item.invoice_item_id }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ item.product_id }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ item.quantity }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">₹{{ item.price }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">{{ item.gst }}</td>
+          <td style="border: 1px solid #ddd; padding: 8px;">₹{{ item.total_amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Grand Total -->
+    <div style="text-align: right; margin-top: 20px;">
+      <h3 style="color: #333;">Grand Total: ₹{{ invoice.grand_total }}</h3>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 40px; font-size: 12px; color: #888;">
+      <p>Thank you for your business!</p>
+    </div>
+  </div>
+</div>
